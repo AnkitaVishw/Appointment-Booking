@@ -1,0 +1,45 @@
+/* src/components/AppointmentPage.css */
+.appointment-page {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    background-color: #ffc0cb; /* Baby pink background color */
+    height: 100vh;
+  }
+  
+  .content {
+    text-align: center;
+  }
+  
+  .quote {
+    font-size: 18px;
+    margin-bottom: 20px; /* Add margin to separate the quote and heading */
+    color: #333; /* Text color */
+  }
+  
+  .quote p {
+    margin: 0; /* Remove default paragraph margin */
+  }
+  
+  h1 {
+    font-size: 24px;
+    color: #333; /* Text color */
+  }
+  
+  .appointment-button {
+    background-color: #4caf50; /* Button background color */
+    color: #fff; /* Button text color */
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 20px;
+  }
+  
+  .appointment-button:hover {
+    background-color: #45a049; /* Button background color on hover */
+    transform: scale(1.05); /* Scale up the button slightly on hover */
+  }
+  

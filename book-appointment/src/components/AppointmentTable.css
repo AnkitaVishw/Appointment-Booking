@@ -1,0 +1,63 @@
+/* src/components/AppointmentTable.css */
+
+/* Apply a baby pink background color to the entire page */
+body {
+  background-color: #ffc0cb;
+  margin: 0; /* Reset default margin for body */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100vh;
+}
+
+/* Style for the appointment table */
+.appointment-table {
+  width: 150%; /* Increase the width as needed */
+  margin: 0 auto; /* Center the table horizontally by adding margin to the left and right */
+  border-collapse: collapse;
+  background-color: #fff; /* White background color for the table */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a subtle box shadow to the table */
+}
+
+.appointment-table th,
+.appointment-table td {
+  border: 1px solid #ddd;
+  padding: 15px; /* Increase the cell padding to increase height */
+  text-align: center;
+}
+
+.appointment-table th {
+  background-color: #f2f2f2;
+}
+
+.gray-cell {
+  background-color: #ccc;
+}
+
+/* Style for clickable time slots */
+.appointment-table td button {
+  background-color: #4caf50; /* Button background color */
+  color: #fff; /* Button text color */
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  margin: 2px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Style for booked slots */
+.booked-slot {
+  background-color: lightgray; /* Set the background color to light gray for booked slots */
+  color: gray; /* Text color for better visibility */
+  cursor: not-allowed; /* Change cursor to not-allowed for disabled buttons */
+  pointer-events: none; /* Disable click events on the button */
+}
+
+/* Add media query for responsiveness if needed */
+@media (max-width: 768px) {
+  .appointment-table {
+    width: 100%;
+  }
+}
