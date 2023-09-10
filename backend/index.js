@@ -4,9 +4,8 @@ const mysql = require('mysql2');
 const app = express();
 const port = 3001;
 
-// Middleware
-app.use(express.json());
-app.use(cors());
+// Configure CORS to allow requests from your React app (replace 'http://localhost:3000' with your frontend URL if needed)
+app.use(cors({ origin: 'http://localhost:3000' }));
 
 const db = mysql.createConnection({
   host: 'localhost',
@@ -23,21 +22,36 @@ db.connect((err) => {
   console.log('Connected to MySQL database.');
 });
 
+// Parse JSON request bodies
+app.use(express.json());
+
+// Handle booking appointments
 app.post('/api/appointments', (req, res) => {
-  // Retrieve data from the request body
   const { day, timeSlot, name, age, phoneNumber } = req.body;
 
-  // Assuming you have the following data after a successful booking
-  const bookedData = {
-    day,
-    timeSlot,
-    name,
-    age,
-    phoneNumber,
-  };
+  // Assuming you have a 'bookings' table with columns: day, timeSlot, name, age, phoneNumber
+  const insertQuery = 'INSERT INTO appointments (day, timeSlot, name, age, phoneNumber) VALUES (?, ?, ?, ?, ?)';
 
-  // Send a response with the booked data
-  res.json(bookedData);
+  // Execute the SQL INSERT query
+  db.query(insertQuery, [day, timeSlot, name, age, phoneNumber], (err, results) => {
+    if (err) {
+      console.error('Error inserting data into the database:', err);
+      res.status(500).json({ err });
+      return;
+    }
+
+    // Assuming the insertion was successful, return the booked data
+    const bookedData = {
+      day,
+      timeSlot,
+      name,
+      age,
+      phoneNumber,
+    };
+
+    // Send a response with the booked data
+    res.json(bookedData);
+  });
 });
 
 app.listen(port, () => {
