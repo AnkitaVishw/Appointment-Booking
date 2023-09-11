@@ -1,0 +1,73 @@
+Project Overview:
+Your task involves creating a web-based application that facilitates appointment scheduling. This application should enable users to view available time slots, 
+book appointments, and receive notifications. 
+While outlining the project, we'd like to specify that your options are limited to the following technology stack:
+
+Frontend: HTML, CSS, React
+Backend: Node.js, JavaScript, PHP
+Database: MySQL
+
+
+
+Features and functionalities of the application:-
+
+1. Appointment Scheduling Page
+
+    # User - friendly Interface :-
+       A clean and intuitive interface for users to initiate appointment scheduling.
+
+    # Appointment Scheduling Button:-
+      A  button that directs users to the "Available Time Slots" page to select a suitable time slot.
+
+2. Available Time Slots Page:
+
+    # View Available Time Slots:
+        Users can see a table of available time slots categorized by day and time.
+
+     # Booked time slot: (This is used as demo for some fixed time slot that can be changed in future)
+        There will be two types of time slots one is dark in the color which shows that times are available for booking,
+        and the time slot in light color shows that this timeSlot is already booked for appointments user can not book those time slot.
+
+    # Non-Booked Time Slots:
+       Non- Booked timeSlot is avilable in the dark green color user can book those time.
+
+    #Select and Book Appointments: 
+     * Users can choose a preferred time slot and book appointments with a simple click.
+     * After clicking on the available time slot there will display a form in which user have to provide information like date, name age and phone number.
+     * After that there is a book slot button when user will click on the button appointment will book for those time slot and date.
+
+    # Notifications :
+       Notification System: For notification user will get a notification in alert box just after by clicking on the book slot button.
+    # Data Storage: 
+       Booked appointment data is securely stored in the MySQL database.
+
+3. Database Integration:
+
+    # MySQL Database: 
+       The application integrates with a MySQL database to store user data, appointment details.
+       
+       CREATE TABLE appointments (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        day VARCHAR(255) NOT NULL,
+        appointment_date DATE NOT NULL,
+        timeSlot VARCHAR(255) NOT NULL,
+        name VARCHAR(255) NOT NULL,
+        age INT NOT NULL,
+        phoneNumber BIGINT NOT NULL
+        );
+        
+       This is my sql query to create the table appointments in which the data will store.
+
+Development Phases:
+
+Frontend Development:
+Create the "Appointment Scheduling" and "Available Time Slots" pages using HTML, CSS, and React.
+
+Backend Development:
+
+Set up the Node.js and javascript backend to handle appointment management, and database interactions.
+Develop APIs for frontend-backend communication.
+
+
+
+
