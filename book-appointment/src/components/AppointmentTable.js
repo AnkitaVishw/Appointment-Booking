@@ -1,34 +1,37 @@
 import React, { useState } from 'react';
 import './AppointmentTable.css';
 
-function isSlotBooked(bookedSlots, day, timeSlot) {
-  return bookedSlots.includes(`${day}'s ${timeSlot}`);
+function isSlotBooked(bookedSlots, day, date, timeSlot) {
+  const slotKey = `${day}'s ${date} ${timeSlot}`;
+  return bookedSlots.includes(slotKey);
 }
 
 function AppointmentTable() {
-  const demoBookedSlots = ["Sunday's 10am-12pm", "Monday's 1pm-4pm"];
+  const demoBookedSlots = ["Sunday's 2023-09-10 10am-12pm", "Monday's 2023-09-11 1pm-4pm"];
   const [bookedSlots, setBookedSlots] = useState(demoBookedSlots);
 
   const [bookingDetails, setBookingDetails] = useState({
     day: '',
+    date: '',
     timeSlot: '',
     name: '',
-    age: '',
-    phoneNumber: '',
+    age: '', // Allow free text input for age
+    phoneNumber: '', // Will store as an integer
   });
 
-  function handleTimeSlotClick(day, timeSlot) {
-    const slotKey = `${day}'s ${timeSlot}`;
+  function handleTimeSlotClick(day, date, timeSlot) {
+    const slotKey = `${day}'s ${date} ${timeSlot}`;
 
-    if (isSlotBooked(bookedSlots, day, timeSlot)) {
+    if (isSlotBooked(bookedSlots, day, date, timeSlot)) {
       alert(`The ${slotKey} slot is already booked.`);
     } else {
       setBookingDetails({
         day,
+        date,
         timeSlot,
         name: '',
-        age: '',
-        phoneNumber: '',
+        age: '', // Reset to empty when selecting a new slot
+        phoneNumber: '', // Reset to empty when selecting a new slot
       });
     }
   }
@@ -38,6 +41,27 @@ function AppointmentTable() {
       alert('Please fill out all fields.');
       return;
     }
+
+    const age = bookingDetails.age.trim(); // Remove leading/trailing whitespace
+
+    if (!age) {
+      alert('Age cannot be empty.');
+      return;
+    }
+
+    const phoneNumber = parseInt(bookingDetails.phoneNumber, 10);
+
+    if (isNaN(phoneNumber)) {
+      alert('Phone Number must be a valid integer.');
+      return;
+    }
+
+    const slotKey = `${bookingDetails.day}'s ${bookingDetails.date} ${bookingDetails.timeSlot}`;
+    if (isSlotBooked(bookedSlots, bookingDetails.day, bookingDetails.date, bookingDetails.timeSlot)) {
+      alert(`The ${slotKey} slot is already booked.`);
+    } else {
+     
+  
   
     fetch('http://localhost:3001/api/appointments', {
       method: 'POST',
@@ -56,6 +80,7 @@ function AppointmentTable() {
         alert(`Slot successfully booked for ${data.day}'s ${data.timeSlot}.`);
         setBookingDetails({
           day: '',
+          date: '',
           timeSlot: '',
           name: '',
           age: '',
@@ -65,12 +90,18 @@ function AppointmentTable() {
       .catch((error) => {
         console.error('There was a problem with the fetch operation:', error);
       });
+      }
+    
   }
-  
 
   function renderBookingForm() {
     return (
       <div className="booking-form">
+        <input
+          type="date"
+          value={bookingDetails.date}
+          onChange={(e) => setBookingDetails({ ...bookingDetails, date: e.target.value })}
+        />
         <input
           type="text"
           placeholder="Name"
@@ -78,13 +109,13 @@ function AppointmentTable() {
           onChange={(e) => setBookingDetails({ ...bookingDetails, name: e.target.value })}
         />
         <input
-          type="text"
+          type="text" // Allow free text input for Age
           placeholder="Age"
           value={bookingDetails.age}
           onChange={(e) => setBookingDetails({ ...bookingDetails, age: e.target.value })}
         />
         <input
-          type="text"
+          type="tel" // Use type="tel" for Phone Number
           placeholder="Phone Number"
           value={bookingDetails.phoneNumber}
           onChange={(e) => setBookingDetails({ ...bookingDetails, phoneNumber: e.target.value })}
@@ -94,17 +125,16 @@ function AppointmentTable() {
     );
   }
 
-  function generateDayRow(day, timeSlots) {
+  function generateDayRow(day, date, timeSlots) {
     return (
       <tr key={day}>
         <td>{day}</td>
         <td className="gray-cell">
           {timeSlots.map((timeSlot) => (
             <button
-              key={`${day}-${timeSlot}`}
-              onClick={() => handleTimeSlotClick(day, timeSlot)}
-              className={isSlotBooked(bookedSlots, day, timeSlot) ? 'booked-slot' : ''}
-              disabled={isSlotBooked(bookedSlots, day, timeSlot)}
+              key={`${day}-${date}-${timeSlot}`}
+              onClick={() => handleTimeSlotClick(day, date, timeSlot)}
+              className={isSlotBooked(bookedSlots, day, date, timeSlot) ? 'booked-slot' : 'not-booked-slot'}
             >
               {timeSlot}
             </button>
@@ -116,13 +146,14 @@ function AppointmentTable() {
   }
 
   const daysAndTimeSlots = [
-    { day: 'Sunday', timeSlots: ['10am-12pm', '1pm-4pm', '5pm-7pm', '7pm-9pm'] }, 
-    { day: 'Monday', timeSlots: ['10am-12pm', '1pm-4pm', '5pm-7pm', '7pm-9pm'] }, 
-    { day: 'Tuesday', timeSlots: ['10am-12pm', '1pm-4pm', '5pm-7pm', '7pm-9pm'] },
-    { day: 'Wednesday', timeSlots: ['10am-12pm', '1pm-4pm', '5pm-7pm', '7pm-9pm'] }, 
-    { day: 'Thursday', timeSlots: ['10am-12pm', '1pm-4pm', '5pm-7pm', '7pm-9pm'] }, 
-    { day: 'Friday', timeSlots: ['10am-12pm', '1pm-4pm', '5pm-7pm', '7pm-9pm'] },
-    { day: 'Saturday', timeSlots: ['10am-12pm', '1pm-4pm', '5pm-7pm', '7pm-9pm'] },
+    { day: 'Sunday', date: '2023-09-10', timeSlots: ['10am-12pm', '1pm-4pm', '5pm-7pm', '7pm-9pm'] },
+    { day: 'Monday', date: '2023-09-11', timeSlots: ['10am-12pm', '1pm-4pm', '5pm-7pm', '7pm-9pm'] },
+    { day: 'Tuesday', date: '2023-09-12', timeSlots: ['10am-12pm', '1pm-4pm', '5pm-7pm', '7pm-9pm'] },
+    { day: 'Wednesday', date: '2023-09-13', timeSlots: ['10am-12pm', '1pm-4pm', '5pm-7pm', '7pm-9pm'] },
+    { day: 'Thursday', date: '2023-09-14', timeSlots: ['10am-12pm', '1pm-4pm', '5pm-7pm', '7pm-9pm'] },
+    { day: 'Friday', date: '2023-09-15', timeSlots: ['10am-12pm', '1pm-4pm', '5pm-7pm', '7pm-9pm'] },
+    { day: 'Saturday', date: '2023-09-16', timeSlots: ['10am-12pm', '1pm-4pm', '5pm-7pm', '7pm-9pm'] },
+    
   ];
 
   return (
@@ -137,7 +168,7 @@ function AppointmentTable() {
         </tr>
       </thead>
       <tbody>
-        {daysAndTimeSlots.map(({ day, timeSlots }) => generateDayRow(day, timeSlots))}
+        {daysAndTimeSlots.map(({ day, date, timeSlots }) => generateDayRow(day, date, timeSlots))}
       </tbody>
     </table>
   );
