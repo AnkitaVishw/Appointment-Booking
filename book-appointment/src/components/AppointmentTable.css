@@ -35,7 +35,7 @@ body {
 }
 
 /* Style for clickable time slots */
-.appointment-table td button {
+.not-booked-slot {
   background-color: #4caf50; /* Button background color */
   color: #fff; /* Button text color */
   padding: 6px 12px;
@@ -49,10 +49,16 @@ body {
 
 /* Style for booked slots */
 .booked-slot {
-  background-color: lightgray; /* Set the background color to light gray for booked slots */
-  color: gray; /* Text color for better visibility */
+  background-color:lightgreen; /* Set the background color to light gray for booked slots */
+  color: white; /* Text color for better visibility */
   cursor: not-allowed; /* Change cursor to not-allowed for disabled buttons */
-  pointer-events: none; /* Disable click events on the button */
+  /*pointer-events: none; /* Disable click events on the button */
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  margin: 2px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 /* Add media query for responsiveness if needed */
