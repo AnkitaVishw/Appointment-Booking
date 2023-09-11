@@ -15,8 +15,8 @@ function AppointmentTable() {
     date: '',
     timeSlot: '',
     name: '',
-    age: '', // Allow free text input for age
-    phoneNumber: '', // Will store as an integer
+    age: '', 
+    phoneNumber: '', 
   });
 
   function handleTimeSlotClick(day, date, timeSlot) {
@@ -30,8 +30,8 @@ function AppointmentTable() {
         date,
         timeSlot,
         name: '',
-        age: '', // Reset to empty when selecting a new slot
-        phoneNumber: '', // Reset to empty when selecting a new slot
+        age: '', 
+        phoneNumber: '', 
       });
     }
   }
@@ -42,7 +42,7 @@ function AppointmentTable() {
       return;
     }
 
-    const age = bookingDetails.age.trim(); // Remove leading/trailing whitespace
+    const age = bookingDetails.age.trim(); 
 
     if (!age) {
       alert('Age cannot be empty.');

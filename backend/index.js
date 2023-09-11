@@ -4,7 +4,9 @@ const mysql = require('mysql2');
 const twilio = require('twilio'); 
 const app = express();
 const port = 3001;
-
+const EventEmitter = require('events');
+const emitter = new EventEmitter()
+emitter.setMaxListeners(100)
 app.use(cors({ origin: 'http://localhost:3000' }));
 
 const db = mysql.createConnection({
@@ -69,8 +71,8 @@ function sendSmsNotification(appointmentDetails) {
   twilioClient.messages
     .create({
       body: message,
-      from: '+12512202857',
-      to: '+919369730596', 
+      from: '',
+      to: phoneNumber, 
     })
     .then((message) => console.log('SMS notification sent:', message.sid))
     .catch((error) => console.error('Error sending SMS notification:', error));
