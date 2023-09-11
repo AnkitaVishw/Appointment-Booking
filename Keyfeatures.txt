@@ -37,7 +37,10 @@ Features and functionalities of the application:-
      * After that there is a book slot button when user will click on the button appointment will book for those time slot and date.
 
     # Notifications :
-       Notification System: For notification user will get a notification in alert box just after by clicking on the book slot button.
+       Notification System: For notification user will get a notification in sms in which users will get notified that their appointment is confirmed. 
+       The notification will be send on the phone number.
+       I used twilio to send sms notification.
+
     # Data Storage: 
        Booked appointment data is securely stored in the MySQL database.
 
@@ -68,6 +71,6 @@ Backend Development:
 Set up the Node.js and javascript backend to handle appointment management, and database interactions.
 Develop APIs for frontend-backend communication.
 
-
+Twilio is used to send sms notification.
 
 
